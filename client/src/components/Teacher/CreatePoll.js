@@ -9,6 +9,7 @@ function CreatePoll({ onAsk }) {
     { id: 2, value: '' },
   ]);
   const [correctAnswerId, setCorrectAnswerId] = useState(null);
+  const [IncorrectAnswerId, setIncorrectAnswerId] = useState(null);
   const [timeLimit, setTimeLimit] = useState(60);
 
   const handleOptionChange = (id, value) => {
@@ -49,17 +50,20 @@ function CreatePoll({ onAsk }) {
         </div>
 
         <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-            <div className={styles.label}>Edit Options</div>
+            <div className={styles.label}><b>Edit Options</b></div>
             {options.map((option, index) => (
             <div key={option.id} className={styles.optionInputContainer}>
                 <div className={styles.optionInput}>
-                    <span>{index + 1}</span>
+                    <div className={styles.index}>{index + 1}</div>
                     <input type="text" value={option.value} onChange={(e) => handleOptionChange(option.id, e.target.value)} required />
                 </div>
                 <div className={styles.correctAnswerGroup}>
                     <label>Is It Correct?</label>
                     <input type="radio" id={`yes-${option.id}`} name="correctAnswer" checked={correctAnswerId === option.id} onChange={() => setCorrectAnswerId(option.id)} required/>
                     <label htmlFor={`yes-${option.id}`}>Yes</label>
+
+                    <input type="radio" id={`no-${option.id}`} name="incorrectAnswer" checked={IncorrectAnswerId === option.id} onChange={() => setIncorrectAnswerId(option.id)} />
+                    <label htmlFor={`no-${option.id}`}>No</label>
                 </div>
             </div>
             ))}

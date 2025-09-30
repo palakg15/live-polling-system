@@ -57,8 +57,12 @@
 
 .messageText {
   font-size: 0.9rem;
-  color: #4B5563;
+  background-color: #373737;
+  color:White;
+  padding: 5px;
+  display: inline-block;
   word-wrap: break-word;
+  border-radius: 5px;
 }
 
 .chatForm {
