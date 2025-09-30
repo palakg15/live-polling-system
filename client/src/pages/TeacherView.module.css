@@ -1,0 +1,36 @@
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  width: 900px;
+  align-items: flex-start;
+}
+
+.leftPanel, .rightPanel {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.panelTitle {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.studentList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.studentItem {
+  color: #94A3B8;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #334155;
+}
+
+.studentItem:last-child {
+  border-bottom: none;
+}

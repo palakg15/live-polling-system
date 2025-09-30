@@ -1,0 +1,48 @@
+.container {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 2.5rem;
+  width: 600px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcomeMessage {
+  text-align: center;
+  color: #94A3B8;
+  font-size: 1.25rem;
+}
+
+.questionTitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.optionsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.optionButton {
+  padding: 1rem;
+  background-color: #334155;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.optionButton:hover {
+  background-color: #475569;
+  border-color: #64748B;
+}

@@ -1,0 +1,36 @@
+.wrapper {
+  margin-top: 2rem;
+}
+
+.resultItem {
+  margin-bottom: 1rem;
+}
+
+.labelContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.optionText {
+  font-weight: 500;
+}
+
+.percentageText {
+  color: #94A3B8;
+}
+
+.progressBar {
+  background-color: #334155;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  background-color: #4F46E5;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease-in-out;
+}

@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-violet: #7765DA;
+  --primary-blue: #5767D0;
+  --text-dark: #373737;
+  --border-color: #6E6E6E;
+  --background-light: #F2F2F2;
+  --light-gray-background: #F3F4F6;
+  --green-correct: #22C55E;
+  --green-light-bg: #F0FDF4;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.intervuePollTag {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--primary-violet);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.intervuePollTag svg {
+  margin-right: 0.4rem;
+  height: 1em;
+  width: 1em;
+}
