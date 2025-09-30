@@ -16,16 +16,22 @@ function NameEntry({ onJoin }) {
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
         <IntervuePollTag />
-        <h1 className={styles.title}>Let's Get Started</h1>
-        <p className={styles.subtitle}>Enter your name, and you'll be ready to answer the questions once the poll starts.</p>
-        <input
-          className={styles.input}
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your Name"
-          required
-        />
+        <h1 className={styles.title}>Let's <strong>Get Started</strong></h1>
+        <p className={styles.subtitle}>If you're a student, you'll be able to <strong>submit your answers</strong>, participate in live polls, and see how your responses compare with your classmates.</p>
+
+        {/* New structure for the input field */}
+        <div className={styles.inputGroup}>
+          <label htmlFor="studentName" className={styles.label}>Enter your Name</label>
+          <input
+            id="studentName"
+            className={styles.input}
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+
         <button className={styles.continueButton} type="submit">Continue</button>
       </form>
     </div>

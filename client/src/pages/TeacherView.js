@@ -7,8 +7,26 @@ import Chat from '../components/common/Chat';
 
 function TeacherView() {
   const [poll, setPoll] = useState(null);
+  const [students, setStudents] = useState([]); // This was the missing line
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
+
+  useEffect(() => {
+    socket.connect();
+    socket.emit('teacher:join');
+
+    const studentUpdateListener = (updatedStudents) => setStudents(Object.entries(updatedStudents));
+    const historyListener = (pollHistoryData) => setHistory(pollHistoryData);
+
+    socket.on('server:studentUpdate', studentUpdateListener);
+    socket.on('server:pollHistory', historyListener);
+
+    return () => {
+      socket.off('server:studentUpdate', studentUpdateListener);
+      socket.off('server:pollHistory', historyListener);
+      socket.disconnect();
+    };
+  }, []);
 
   const handleAskQuestion = (pollData) => {
     socket.emit('teacher:askQuestion', pollData);
@@ -28,20 +46,6 @@ function TeacherView() {
     setShowHistory(true);
   };
 
-  useEffect(() => {
-    socket.connect();
-    socket.emit('teacher:join');
-    
-    const historyListener = (pollHistoryData) => setHistory(pollHistoryData);
-    socket.on('server:pollHistory', historyListener);
-
-    return () => {
-      socket.off('server:pollHistory', historyListener);
-      socket.disconnect();
-    };
-  }, []);
-
-
   return (
     <>
       {!poll ? (
@@ -55,7 +59,11 @@ function TeacherView() {
         />
       )}
       {showHistory && <PollHistoryView history={history} onClose={() => setShowHistory(false)} />}
-      <Chat userName="Teacher" />
+      <Chat 
+        userName="Teacher" 
+        students={students} 
+        onKickStudent={handleKickStudent} 
+      />
     </>
   );
 }

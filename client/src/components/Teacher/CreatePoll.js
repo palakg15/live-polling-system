@@ -9,7 +9,6 @@ function CreatePoll({ onAsk }) {
     { id: 2, value: '' },
   ]);
   const [correctAnswerId, setCorrectAnswerId] = useState(null);
-  const [IncorrectAnswerId, setIncorrectAnswerId] = useState(null);
   const [timeLimit, setTimeLimit] = useState(60);
 
   const handleOptionChange = (id, value) => {
@@ -33,7 +32,7 @@ function CreatePoll({ onAsk }) {
         correctAnswer: correctAnswerValue 
       });
     } else {
-        alert("Please fill in the question, at least two options, and select a correct answer.");
+        alert("Please fill in the question, at least two options, and select one correct answer.");
     }
   };
 
@@ -41,45 +40,68 @@ function CreatePoll({ onAsk }) {
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
         <IntervuePollTag />
-        <h1 className={styles.title}>Let's Get Started</h1>
+        <h1 className={styles.title}>Let's <strong>Get Started</strong></h1>
         <p className={styles.subtitle}>You'll have the ability to create and manage polls, ask questions, and monitor your students' responses in real-time.</p>
         
-        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-          <label htmlFor="question" className={styles.label}>Enter your question</label>
-          <textarea id="question" className={styles.textarea} value={question} onChange={(e) => setQuestion(e.target.value)} required />
-        </div>
-
-        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-            <div className={styles.label}><b>Edit Options</b></div>
-            {options.map((option, index) => (
-            <div key={option.id} className={styles.optionInputContainer}>
-                <div className={styles.optionInput}>
-                    <div className={styles.index}>{index + 1}</div>
-                    <input type="text" value={option.value} onChange={(e) => handleOptionChange(option.id, e.target.value)} required />
-                </div>
-                <div className={styles.correctAnswerGroup}>
-                    <label>Is It Correct?</label>
-                    <input type="radio" id={`yes-${option.id}`} name="correctAnswer" checked={correctAnswerId === option.id} onChange={() => setCorrectAnswerId(option.id)} required/>
-                    <label htmlFor={`yes-${option.id}`}>Yes</label>
-
-                    <input type="radio" id={`no-${option.id}`} name="incorrectAnswer" checked={IncorrectAnswerId === option.id} onChange={() => setIncorrectAnswerId(option.id)} />
-                    <label htmlFor={`no-${option.id}`}>No</label>
-                </div>
-            </div>
-            ))}
-            <button type="button" className={styles.addOptionButton} onClick={handleAddOption}>+ Add More option</button>
-        </div>
-
-        <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-            <label htmlFor="timeLimit" className={styles.label}>Time limit</label>
-            <select id="timeLimit" className={styles.select} value={timeLimit} onChange={(e) => setTimeLimit(Number(e.target.value))}>
-                <option value={30}>30 seconds</option>
-                <option value={60}>60 seconds</option>
-                <option value={90}>90 seconds</option>
+        <div className={styles.questionRow}>
+          <div className={styles.questionInputSection}>
+            <label htmlFor="question" className={styles.label}>Enter your question</label>
+            <textarea 
+                id="question" 
+                className={styles.textarea} 
+                value={question} 
+                onChange={(e) => setQuestion(e.target.value)} 
+                maxLength="100"
+                required 
+            />
+            <span className={styles.charCounter}>{question.length}/100</span>
+          </div>
+          <div className={styles.timeLimitSection}>
+            <label htmlFor="timeLimit" className={styles.label}>&nbsp;</label>
+            <select 
+                id="timeLimit" 
+                className={styles.select} 
+                value={timeLimit} 
+                onChange={(e) => setTimeLimit(Number(e.target.value))}
+            >
+              <option value={30}>30 seconds</option>
+              <option value={60}>60 seconds</option>
+              <option value={90}>90 seconds</option>
             </select>
+          </div>
         </div>
 
-        <button className={`${styles.askButton} ${styles.fullWidth}`} type="submit">Ask Question</button>
+        <div>
+            <div className={styles.optionsHeader}>
+                <div className={styles.label}>Edit Options</div>
+                <div className={styles.label}>Is It Correct?</div>
+            </div>
+            <div>
+                {options.map((option, index) => (
+                <div key={option.id} className={styles.optionInputContainer}>
+                    <div className={styles.optionNumber}>{index + 1}</div>
+                    <div className={styles.optionInputGroup}>
+                        <input type="text" value={option.value} onChange={(e) => handleOptionChange(option.id, e.target.value)} required />
+                    </div>
+                    <div className={styles.correctAnswerGroup}>
+                        <label className={styles.radioLabel}>
+                          <input type="radio" name="correctAnswer" checked={correctAnswerId === option.id} onChange={() => setCorrectAnswerId(option.id)} required/> Yes
+                        </label>
+                        <label className={styles.radioLabel}>
+                          <input type="radio" name={`isCorrect-no-${option.id}`} checked={correctAnswerId !== option.id && correctAnswerId !== null} readOnly /> No
+                        </label>
+                    </div>
+                </div>
+                ))}
+                <button type="button" className={styles.addOptionButton} onClick={handleAddOption}>+ Add More option</button>
+            </div>
+        </div>
+        
+        <hr className={styles.divider} />
+
+        <div className={styles.buttonContainer}>
+            <button className={styles.askButton} type="submit">Ask Question</button>
+        </div>
       </form>
     </div>
   );

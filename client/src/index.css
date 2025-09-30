@@ -30,17 +30,24 @@ body {
 .intervuePollTag {
   display: inline-flex;
   align-items: center;
-  background-color: var(--primary-violet);
+  justify-content: center;
+  
+  /* Applying the new linear gradient */
+  background: linear-gradient(to right, #7565D9, #4D0ACD); 
+  
   color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
+  width: 134px;
+  height: 31px;
+  border-radius: 24px;
+  padding-left: 9px;
+  padding-right: 9px;
+  gap: 7px;
   font-size: 0.8rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
 }
 
 .intervuePollTag svg {
-  margin-right: 0.4rem;
   height: 1em;
   width: 1em;
 }

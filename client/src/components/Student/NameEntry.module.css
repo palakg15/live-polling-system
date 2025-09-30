@@ -1,35 +1,47 @@
 .container {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  padding: 2.5rem 3rem;
-  width: 550px;
+  width: 600px;
   text-align: center;
 }
 
 .title {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: 400;
   margin: 0 0 0.5rem 0;
-  color: var(--text-dark);
 }
 
 .subtitle {
   color: var(--border-color);
   margin-bottom: 2rem;
   font-size: 0.9rem;
+  max-width: 450px; /* Constrain subtitle width for better reading */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* New styles for the input group */
+.inputGroup {
+    width: 507px; /* Exact width from your specs */
+    margin: 2rem auto; /* Center the group */
+    text-align: left; /* Align label to the left */
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Gap between label and input */
+}
+
+.label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--border-color);
 }
 
 .input {
   width: 100%;
   padding: 0.8rem 1rem;
-  background-color: white;
+  background-color: var(--light-gray-background); /* Light gray background for input */
   border: 2px solid #E5E7EB;
   border-radius: 8px;
   color: var(--text-dark);
   font-size: 1rem;
-  margin-top: 1.5rem;
-  text-align: center;
 }
 
 .input:focus {
@@ -37,20 +49,24 @@
   border-color: var(--primary-violet);
 }
 
+/* Updated styles for the Continue button */
 .continueButton {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background-color: var(--primary-violet);
+  width: 234px;
+  height: 58px;
+  border-radius: 34px;
+
+  /* Applying the linear gradient from the previous button */
+  background: linear-gradient(to right, #8F64E1, #1D68BD); 
+
   border: none;
-  border-radius: 8px;
   color: white;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 1.5rem;
-  transition: background-color 0.2s;
+  margin-top: 1rem;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .continueButton:hover {
-  background-color: #6D5ACF;
+  opacity: 0.9;
 }

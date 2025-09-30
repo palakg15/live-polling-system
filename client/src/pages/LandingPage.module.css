@@ -8,7 +8,7 @@
 }
 .title {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: 400;
   margin: 0 0 0.5rem 0;
 }
 .subtitle {
@@ -22,15 +22,26 @@
   text-align: left;
 }
 .roleCard {
-  flex: 1;
-  border: 2px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 1.5rem;
+  width: 387px;
+  height: 143px;
+  border-radius: 10px;
+  padding: 15px 17px 15px 25px;
+  border: 2px solid #E5E7EB; /* Default border */
+
+  /* Flex properties for internal layout */
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+
   cursor: pointer;
   transition: border-color 0.2s, background-color 0.2s;
 }
+
+
 .roleCard.selected {
-  border-color: var(--primary-violet);
+  border-color: 3px solid var(--primary-violet);
+  background-color: #F5F3FF;
+  padding: 14px 16px 14px 24px;
   /* background-color: #F5F3FF; */
 }
 .roleCard h3 {
@@ -43,17 +54,24 @@
 }
 .continueButton {
   width: 100%;
-  padding: 0.8rem 1rem;
-  background-color: var(--primary-violet);
+  max-width: 233.93px; 
+  height: 57.58px;
+  border-radius: 34px; 
+  background: linear-gradient(120deg, #8F64E1, #1D68BD); 
   border: none;
-  border-radius: 8px;
   color: white;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   margin-top: 2rem;
+  transition: filter 0.2s ease-in-out;
+}
+
+.continueButton:hover:not(:disabled) {
+  filter: brightness(90%)
 }
 .continueButton:disabled {
   background-color: #D1D5DB;
   cursor: not-allowed;
+  filter: none;
 }

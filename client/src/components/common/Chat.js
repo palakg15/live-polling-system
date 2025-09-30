@@ -2,16 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import socket from '../../socket/socket';
 import styles from './Chat.module.css';
 
-function Chat({ userName }) {
+// The component now accepts students and the onKickStudent function
+function Chat({ userName, students = [], onKickStudent }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('Chat'); // 'Chat' or 'Participants'
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const messagesEndRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
+  const scrollToBottom = () => { messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }); };
   useEffect(scrollToBottom, [messages]);
 
   useEffect(() => {
@@ -19,19 +18,13 @@ function Chat({ userName }) {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     };
     socket.on('chat:newMessage', messageListener);
-    return () => {
-      socket.off('chat:newMessage', messageListener);
-    };
+    return () => { socket.off('chat:newMessage', messageListener); };
   }, []);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     if (currentMessage.trim()) {
-      const payload = {
-        sender: userName,
-        message: currentMessage.trim(),
-      };
-      socket.emit('chat:sendMessage', payload);
+      socket.emit('chat:sendMessage', { sender: userName, message: currentMessage.trim() });
       setCurrentMessage('');
     }
   };
@@ -41,26 +34,54 @@ function Chat({ userName }) {
       <button className={styles.chatIcon} onClick={() => setIsOpen(!isOpen)}>💬</button>
       {isOpen && (
         <div className={styles.chatWindow}>
-          <div className={styles.chatHeader}>Live Chat</div>
-          <div className={styles.messagesContainer}>
-            {messages.map((msg, index) => (
-              <div key={index} className={styles.message}>
-                <div className={styles.messageSender}>{msg.sender}</div>
-                <div className={styles.messageText}>{msg.message}</div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
+          <div className={styles.tabHeader}>
+            <button 
+              className={`${styles.tabButton} ${activeTab === 'Chat' ? styles.active : ''}`}
+              onClick={() => setActiveTab('Chat')}
+            >
+              Chat
+            </button>
+            <button 
+              className={`${styles.tabButton} ${activeTab === 'Participants' ? styles.active : ''}`}
+              onClick={() => setActiveTab('Participants')}
+            >
+              Participants
+            </button>
           </div>
-          <form className={styles.chatForm} onSubmit={handleSendMessage}>
-            <input
-              type="text"
-              className={styles.chatInput}
-              placeholder="Type a message..."
-              value={currentMessage}
-              onChange={(e) => setCurrentMessage(e.target.value)}
-            />
-            <button type="submit" className={styles.sendButton}>Send</button>
-          </form>
+
+          <div className={styles.tabContent}>
+            {activeTab === 'Chat' ? (
+              <>
+                <div className={styles.messagesContainer}>
+                  {messages.map((msg, index) => (
+                    <div key={index} className={styles.message}>
+                      <div className={styles.messageSender}>{msg.sender}</div>
+                      <div className={styles.messageText}>{msg.message}</div>
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+                <form className={styles.chatForm} onSubmit={handleSendMessage}>
+                  <input type="text" className={styles.chatInput} placeholder="Type a message..." value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)} />
+                  <button type="submit" className={styles.sendButton}>Send</button>
+                </form>
+              </>
+            ) : (
+              <ul className={styles.participantList}>
+                {students.map(([socketId, studentInfo]) => (
+                  <li key={socketId} className={styles.participantItem}>
+                    <span>{studentInfo.name}</span>
+                    {/* Only show kick button if the handler is provided (i.e., for the teacher) */}
+                    {onKickStudent && (
+                      <button className={styles.kickButton} onClick={() => onKickStudent(socketId)}>
+                        Kick
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       )}
     </>

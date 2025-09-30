@@ -10,6 +10,7 @@ function StudentView() {
   const [name, setName] = useState('');
   const [poll, setPoll] = useState(null);
   const [results, setResults] = useState(null);
+  const [students, setStudents] = useState([]);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [isPollEnded, setIsPollEnded] = useState(false);
   const [wasKicked, setWasKicked] = useState(false);
@@ -17,27 +18,29 @@ function StudentView() {
   useEffect(() => {
     socket.connect();
 
-    socket.on('server:newQuestion', (pollData) => {
+    const newQuestionListener = (pollData) => {
       setPoll(pollData);
       setResults(pollData.results);
       setHasAnswered(false);
       setIsPollEnded(false);
-    });
-    socket.on('server:resultsUpdate', (updatedResults) => {
-      setResults(updatedResults);
-    });
-    socket.on('server:pollEnded', () => {
-      setIsPollEnded(true);
-    });
-    socket.on('server:youWereKicked', () => {
-      setWasKicked(true);
-    });
+    };
+    const resultsUpdateListener = (updatedResults) => setResults(updatedResults);
+    const pollEndedListener = () => setIsPollEnded(true);
+    const kickedListener = () => setWasKicked(true);
+    const studentUpdateListener = (updatedStudents) => setStudents(Object.entries(updatedStudents));
+
+    socket.on('server:newQuestion', newQuestionListener);
+    socket.on('server:resultsUpdate', resultsUpdateListener);
+    socket.on('server:pollEnded', pollEndedListener);
+    socket.on('server:youWereKicked', kickedListener);
+    socket.on('server:studentUpdate', studentUpdateListener);
 
     return () => {
-      socket.off('server:newQuestion');
-      socket.off('server:resultsUpdate');
-      socket.off('server:pollEnded');
-      socket.off('server:youWereKicked');
+      socket.off('server:newQuestion', newQuestionListener);
+      socket.off('server:resultsUpdate', resultsUpdateListener);
+      socket.off('server:pollEnded', pollEndedListener);
+      socket.off('server:youWereKicked', kickedListener);
+      socket.off('server:studentUpdate', studentUpdateListener);
       socket.disconnect();
     };
   }, []);
@@ -88,13 +91,30 @@ function StudentView() {
         isPollEnded={isPollEnded}
       />
     );
-  }
+  };
+
+  // This is a simple sub-component to render the avatars
+  const ParticipantAvatars = ({ students }) => (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '2rem', gap: '-8px' }}>
+          {students.slice(0, 3).map(([id, student]) => (
+              <div key={id} style={{
+                  width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary-violet)',
+                  color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontWeight: '600', border: '2px solid white'
+              }}>
+                  {student.name.charAt(0).toUpperCase()}
+              </div>
+          ))}
+          {students.length > 3 && <div style={{marginLeft: '12px', color: 'var(--border-color)', fontWeight: '500'}}>+{students.length - 3}</div>}
+      </div>
+  );
 
   return (
-    <>
-      {renderMainContent()}
-      {hasJoined && !wasKicked && <Chat userName={name} />}
-    </>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {hasJoined && <ParticipantAvatars students={students} />}
+        {renderMainContent()}
+        {hasJoined && !wasKicked && <Chat userName={name} students={students} />}
+    </div>
   );
 }
 

@@ -26,48 +26,57 @@ function LivePoll({ poll, results, onSubmit, hasAnswered, isPollEnded }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <span>Question 1</span>
+        <span><strong>Question 1</strong></span>
         <span className={styles.timer}>00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}</span>
       </div>
-      <h2 className={styles.questionTitle}>{poll.question}</h2>
-      
-      <div>
-        {poll.options.map(option => {
-          const voteCount = results ? results[option] : 0;
-          const percentage = totalVotes === 0 ? 0 : (voteCount / totalVotes) * 100;
-          
-          let optionClass = styles.optionButton;
-          if (showResults) {
-            if (option === poll.correctAnswer) {
-              optionClass += ` ${styles.correct}`;
-            }
-          } else if (selectedOption === option) {
-            optionClass += ` ${styles.selected}`;
-          }
 
-          return (
+      {/* The wrapper div is now removed from around these two sections */}
+      <div className={styles.questionBox}>{poll.question}</div>
+
+      {!showResults ? (
+        // --- VOTING VIEW ---
+        <>
+          <div className={styles.optionsContainer}>
+            {poll.options.map((option, index) => (
+              <div
+                key={option}
+                className={`${styles.optionItem} ${styles.selectable} ${selectedOption === option ? styles.selected : ''}`}
+                onClick={() => setSelectedOption(option)}
+              >
+                <div className={styles.optionNumber}>{index + 1}</div>
+                <span className={styles.optionText}>{option}</span>
+              </div>
+            ))}
+          </div>
+          <div className={styles.buttonContainer}>
             <button
-              key={option}
-              className={optionClass}
-              onClick={() => setSelectedOption(option)}
-              disabled={showResults}
+              className={styles.submitButton}
+              onClick={() => onSubmit(selectedOption)}
+              disabled={!selectedOption}
             >
-              {showResults && <div className={styles.progressBar} style={{ width: `${percentage}%` }}></div>}
-              <span className={styles.optionContent}>{option}</span>
+              Submit
             </button>
-          );
-        })}
-      </div>
-
-      {!showResults &&
-        <button
-          className={styles.submitButton}
-          onClick={() => onSubmit(selectedOption)}
-          disabled={!selectedOption}
-        >
-          Submit
-        </button>
-      }
+          </div>
+        </>
+      ) : (
+        // --- RESULTS VIEW ---
+        <>
+          <div className={styles.optionsContainer}>
+            {poll.options.map((option, index) => {
+              const percentage = totalVotes === 0 ? 0 : ((results[option] || 0) / totalVotes) * 100;
+              return (
+                <div key={option} className={styles.optionItem}>
+                  <div className={styles.progressBar} style={{ width: `${percentage}%` }}></div>
+                  <div className={styles.optionNumber}>{index + 1}</div>
+                  <span className={styles.optionText}>{option}</span>
+                  <span className={styles.percentageText}>{percentage.toFixed(0)}%</span>
+                </div>
+              );
+            })}
+          </div>
+          <p className={styles.waitMessage}>Wait for the teacher to ask a new question..</p>
+        </>
+      )}
     </div>
   );
 }

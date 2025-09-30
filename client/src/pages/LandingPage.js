@@ -26,7 +26,7 @@ function LandingPage() {
           onClick={() => setSelectedRole('Student')}
         >
           <h3>I'm a Student</h3>
-          <p>I'm a simply dummy text of the printing and typesetting industry.</p>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
         </div>
         <div
           className={`${styles.roleCard} ${selectedRole === 'Teacher' ? styles.selected : ''}`}
