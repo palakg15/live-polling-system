@@ -63,7 +63,7 @@ function StudentView() {
         <div style={{ color: 'var(--text-dark)', textAlign: 'center', backgroundColor: 'white', padding: '3rem', borderRadius: '12px' }}>
           <IntervuePollTag />
           <h1>You've been Kicked out!</h1>
-          <p>The teacher has removed you from the poll system.</p>
+          <p>Looks like the teacher had removed you from the poll system. Please Try again sometime.</p>
         </div>
       );
     }
@@ -74,10 +74,10 @@ function StudentView() {
     
     if (!poll) {
       return (
-         <div style={{ color: 'var(--text-dark)', textAlign: 'center', backgroundColor: 'white', padding: '4rem 3rem', borderRadius: '12px', width: '550px' }}>
+         <div className="card-container waiting">
             <IntervuePollTag />
-            <h2 style={{marginTop: '2rem'}}>Welcome, {name}!</h2>
-            <p>Please wait for the teacher to start the poll...</p>
+            <div className="spinner"></div>
+            <p>Wait for the teacher to ask questions..</p>
          </div>
       );
     }
