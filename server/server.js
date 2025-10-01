@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: ["http://localhost:3000", "https://live-polling-system-2-wey0.onrender.com"],
     methods: ["GET", "POST"]
   }
 });
