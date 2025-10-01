@@ -54,9 +54,14 @@ function Chat({ userName, students = [], onKickStudent }) {
               <>
                 <div className={styles.messagesContainer}>
                   {messages.map((msg, index) => (
-                    <div key={index} className={styles.message}>
-                      <div className={styles.messageSender}>{msg.sender}</div>
-                      <div className={styles.messageText}>{msg.message}</div>
+                    <div key={index} className={
+            msg.sender === "Teacher" 
+                ? styles.message 
+                : `${styles.message} ${styles.studentRow}`
+        }>
+                       <div className={msg.sender == "Teacher"? styles.messageSender : styles.studentSender}>{msg.sender}</div>
+                      <div className={msg.sender == "Teacher"? styles.messageText : styles.studentText}>{msg.message}</div>
+                      
                     </div>
                   ))}
                   <div ref={messagesEndRef} />

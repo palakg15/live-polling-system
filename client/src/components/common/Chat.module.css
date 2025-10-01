@@ -109,6 +109,29 @@
   
  }
 
+ .studentText{
+  font-size: 0.9rem;
+  color:white; 
+  word-wrap: break-word;
+  padding: 0.4rem 0.80rem;
+  border-radius: 8px;
+  margin-top: 0.25rem;
+  background-color: #7765DA;
+  display: flex;
+  justify-content: flex-end; 
+ }
+
+ .studentRow {
+    display: flex;
+    flex-direction: column; /* Stacks the sender and text vertically */
+    align-items: flex-end; /* 🚨 Pushes the entire content group (sender and text) to the right */
+}
+
+ .studentSender{
+  display: flex;
+  justify-content: flex-end;
+ }
+
 .chatForm { display: flex; border-top: 1px solid #E5E7EB; }
 .chatInput { flex-grow: 1; border: none; padding: 1rem; font-size: 0.9rem; }
 .chatInput:focus { outline: none; }
