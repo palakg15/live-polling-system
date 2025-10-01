@@ -45,18 +45,10 @@ function CreatePoll({ onAsk }) {
         
         <div className={styles.questionRow}>
           <div className={styles.questionInputSection}>
+
+            <div className={styles.mycontainer}>
             <label htmlFor="question" className={styles.label}>Enter your question</label>
-            <textarea 
-                id="question" 
-                className={styles.textarea} 
-                value={question} 
-                onChange={(e) => setQuestion(e.target.value)} 
-                maxLength="100"
-                required 
-            />
-            <span className={styles.charCounter}>{question.length}/100</span>
-          </div>
-          <div className={styles.timeLimitSection}>
+            <span className={styles.timeLimitSection}>
             <label htmlFor="timeLimit" className={styles.label}>&nbsp;</label>
             <select 
                 id="timeLimit" 
@@ -68,7 +60,21 @@ function CreatePoll({ onAsk }) {
               <option value={60}>60 seconds</option>
               <option value={90}>90 seconds</option>
             </select>
+          </span>
           </div>
+
+
+            <textarea 
+                id="question" 
+                className={styles.textarea} 
+                value={question} 
+                onChange={(e) => setQuestion(e.target.value)} 
+                maxLength="100"
+                required 
+            />
+            <span className={styles.charCounter}>{question.length}/100</span>
+          </div>
+          
         </div>
 
         <div>

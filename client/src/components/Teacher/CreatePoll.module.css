@@ -3,6 +3,12 @@
   text-align: left;
 }
 
+.mycontainer{
+  display: flex;
+  height:45px;
+  justify-content: space-between;
+}
+
 .title {
   font-size: 1.75rem;
   font-weight: 400;
@@ -18,14 +24,15 @@
 }
 
 .label {
-  display: block;
+  display: inline;
   font-weight: 600;
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
   color: var(--text-dark);
+  height: 20px;
 }
 
-.textarea, .select {
+.textarea {
   width: 100%;
   padding: 0.8rem 1rem;
   background-color: var(--light-gray-background);
@@ -34,6 +41,16 @@
   color: var(--text-dark);
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
+}
+
+.select{
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    color: var(--text-dark);
+    background-color: var(--light-gray-background);
+
 }
 
 .textarea {
@@ -67,8 +84,11 @@
 }
 
 .timeLimitSection {
-  width: 150px;
+  width: 128px;
   flex-shrink: 0;
+  display: inline-block;
+  height: 20px;
+
 }
 
 .optionsHeader {

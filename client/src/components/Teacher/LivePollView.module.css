@@ -17,7 +17,11 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--text-dark);
-  margin: 0;
+  margin: 5px 0px;
+  background-image: linear-gradient(to right, #373737, #6E6E6E);
+  padding: 0.5rem 1rem;
+  border-radius: 9px;
+  color:white;
 }
 
 .historyButton {

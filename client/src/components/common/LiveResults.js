@@ -16,12 +16,12 @@ function LiveResults({ results }) {
               <span className={styles.optionText}>{option}</span>
               <span className={styles.percentageText}>{percentage.toFixed(1)}%</span>
             </div>
-            <div className={styles.progressBar}>
+            {/* <div className={styles.progressBar}>
               <div 
                 className={styles.progressBarFill} 
                 style={{ width: `${percentage}%` }}
               />
-            </div>
+            </div> */}
           </div>
         );
       })}

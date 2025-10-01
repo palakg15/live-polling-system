@@ -97,7 +97,17 @@
 
 .message { margin-bottom: 0.75rem; }
 .messageSender { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
-.messageText { font-size: 0.9rem; color: #4B5563; word-wrap: break-word; }
+.messageText { 
+  font-size: 0.9rem;
+  background-color: #373737;
+  color:white; 
+  word-wrap: break-word;
+  display: inline-block;
+  padding: 0.4rem 0.80rem;
+  border-radius: 8px;
+  margin-top: 0.25rem;
+  
+ }
 
 .chatForm { display: flex; border-top: 1px solid #E5E7EB; }
 .chatInput { flex-grow: 1; border: none; padding: 1rem; font-size: 0.9rem; }

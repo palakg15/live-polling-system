@@ -15,18 +15,24 @@
 
 .optionText {
   font-weight: 500;
+  background-color: #5767D0;
+  color: white;
+  height: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  width:100%;
 }
 
 .percentageText {
   color: #94A3B8;
 }
 
-.progressBar {
+/* .progressBar {
   background-color: #334155;
   border-radius: 999px;
   height: 10px;
   overflow: hidden;
-}
+} */
 
 .progressBarFill {
   background-color: #4F46E5;
