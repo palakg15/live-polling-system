@@ -3,24 +3,22 @@ import socket from '../../socket/socket';
 import LiveResults from '../common/LiveResults';
 import styles from './LivePollView.module.css';
 
-function LivePollView({ poll, onAskNew, onKickStudent, onShowHistory }) {
-  const [students, setStudents] = useState([]);
+function LivePollView({ poll, onAskNew, onShowHistory }) {
   const [results, setResults] = useState(null);
   const [isPollEnded, setIsPollEnded] = useState(false);
 
   useEffect(() => {
-    const studentUpdateListener = (updatedStudents) => setStudents(Object.entries(updatedStudents));
     const resultsListener = (updatedResults) => setResults(updatedResults);
     const pollEndedListener = () => setIsPollEnded(true);
 
-    socket.on('server:studentUpdate', studentUpdateListener);
     socket.on('server:resultsUpdate', resultsListener);
     socket.on('server:pollEnded', pollEndedListener);
-
-    socket.emit('teacher:join');
+    
+    // Set initial results when the component mounts
+    setResults(poll.results);
+    setIsPollEnded(false); // Reset for new polls
 
     return () => {
-      socket.off('server:studentUpdate', studentUpdateListener);
       socket.off('server:resultsUpdate', resultsListener);
       socket.off('server:pollEnded', pollEndedListener);
     };
@@ -28,33 +26,19 @@ function LivePollView({ poll, onAskNew, onKickStudent, onShowHistory }) {
 
   return (
     <div className={styles.container}>
+      <div className={styles.topBar}></div>
       <button className={styles.historyButton} onClick={onShowHistory}>
-        View Poll History
-      </button>
-      <h2 className={styles.questionTitle}>{poll.question}</h2>
+    <span role="img" aria-label="View">👁️</span>
+    View Poll History
+  </button>
       
+      <div className={styles.questionLabel}>Question</div>
       <LiveResults 
+        question={poll.question}
         results={results} 
         correctAnswer={poll.correctAnswer}
         isPollEnded={isPollEnded}
       />
-
-      <div className={styles.participantsContainer}>
-        <h3 className={styles.participantsTitle}>Participants ({students.length})</h3>
-        <ul className={styles.participantsList}>
-          {students.map(([socketId, studentInfo]) => (
-            <li key={socketId} className={styles.participantItem}>
-              <span>{studentInfo.name}</span>
-              <button 
-                className={styles.kickButton}
-                onClick={() => onKickStudent(socketId)}
-              >
-                Kick
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
 
       <button className={styles.newQuestionButton} onClick={onAskNew}>
         + Ask a new question

@@ -1,42 +1,87 @@
 .wrapper {
-  margin-top: 2rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.questionHeader {
+  background: linear-gradient(to right, #343434 0%, #6E6E6E 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+}
+
+.resultsList {
+  background-color: white;
+  padding: 1rem;
 }
 
 .resultItem {
-  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
 }
 
-.labelContainer {
+.resultItem:last-child {
+  margin-bottom: 0;
+}
+
+.optionNumber {
+  background-color: var(--primary-violet);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.progressBarContainer {
+  flex-grow: 1;
+  position: relative;
+  background-color: #f0f0f0;
+  border-radius: 999px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--primary-blue);
+  border-radius: 999px;
+  z-index: 1;
+  transition: width 0.3s ease-in-out;
 }
 
 .optionText {
+  position: relative;
+  z-index: 2;
   font-weight: 500;
-  background-color: #5767D0;
   color: white;
-  height: 40px;
-  padding: 10px;
-  border-radius: 10px;
-  width:100%;
 }
 
 .percentageText {
-  color: #94A3B8;
+  font-weight: 600;
+  color: var(--text-dark);
+  width: 50px;
+  text-align: right;
+  flex-shrink: 0;
 }
 
-/* .progressBar {
-  background-color: #334155;
-  border-radius: 999px;
-  height: 10px;
-  overflow: hidden;
-} */
-
-.progressBarFill {
-  background-color: #4F46E5;
-  height: 100%;
-  border-radius: 999px;
-  transition: width 0.3s ease-in-out;
+/* Correct answer styling - not shown in the teacher's screenshot, but good to have for consistency */
+.resultItem.correct .optionNumber {
+    background-color: var(--green-correct);
 }

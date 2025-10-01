@@ -7,6 +7,7 @@ function LivePoll({ poll, results, onSubmit, hasAnswered, isPollEnded }) {
 
   useEffect(() => {
     setTimeLeft(poll.timeLimit);
+    setSelectedOption(null);
   }, [poll]);
 
   useEffect(() => {
@@ -30,14 +31,11 @@ function LivePoll({ poll, results, onSubmit, hasAnswered, isPollEnded }) {
         <span className={styles.timer}>00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}</span>
       </div>
 
-      {/* The wrapper div is now removed from around these two sections */}
-      <div className={styles.questionBox}>{poll.question}</div>
-
-      {!showResults ? (
-        // --- VOTING VIEW ---
-        <>
-          <div className={styles.optionsContainer}>
-            {poll.options.map((option, index) => (
+      <div className={styles.pollContentBox}>
+        <div className={styles.questionBox}>{poll.question}</div>
+        <div className={styles.optionsContainer}>
+          {!showResults ? (
+            poll.options.map((option, index) => (
               <div
                 key={option}
                 className={`${styles.optionItem} ${styles.selectable} ${selectedOption === option ? styles.selected : ''}`}
@@ -46,23 +44,9 @@ function LivePoll({ poll, results, onSubmit, hasAnswered, isPollEnded }) {
                 <div className={styles.optionNumber}>{index + 1}</div>
                 <span className={styles.optionText}>{option}</span>
               </div>
-            ))}
-          </div>
-          <div className={styles.buttonContainer}>
-            <button
-              className={styles.submitButton}
-              onClick={() => onSubmit(selectedOption)}
-              disabled={!selectedOption}
-            >
-              Submit
-            </button>
-          </div>
-        </>
-      ) : (
-        // --- RESULTS VIEW ---
-        <>
-          <div className={styles.optionsContainer}>
-            {poll.options.map((option, index) => {
+            ))
+          ) : (
+            poll.options.map((option, index) => {
               const percentage = totalVotes === 0 ? 0 : ((results[option] || 0) / totalVotes) * 100;
               return (
                 <div key={option} className={styles.optionItem}>
@@ -72,10 +56,23 @@ function LivePoll({ poll, results, onSubmit, hasAnswered, isPollEnded }) {
                   <span className={styles.percentageText}>{percentage.toFixed(0)}%</span>
                 </div>
               );
-            })}
+            })
+          )}
+        </div>
+        {!showResults && (
+          <div className={styles.buttonContainer}>
+            <button
+              className={styles.submitButton}
+              onClick={() => onSubmit(selectedOption)}
+              disabled={!selectedOption}
+            >
+              Submit
+            </button>
           </div>
-          <p className={styles.waitMessage}>Wait for the teacher to ask a new question..</p>
-        </>
+        )}
+      </div>
+      {showResults && (
+        <p className={styles.waitMessage}>Wait for the teacher to ask a new question..</p>
       )}
     </div>
   );

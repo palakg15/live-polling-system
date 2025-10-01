@@ -1,47 +1,66 @@
 .container {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  padding: 2.5rem;
   width: 700px;
+  position: relative;
 }
 
-.header {
+.topBar {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   margin-bottom: 2rem;
-}
-
-.questionTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin: 5px 0px;
-  background-image: linear-gradient(to right, #373737, #6E6E6E);
-  padding: 0.5rem 1rem;
-  border-radius: 9px;
-  color:white;
+  margin-top: 1rem;
 }
 
 .historyButton {
-  background-color: var(--light-gray-background);
-  border: 1px solid #E5E7EB;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  width: 267px;
+  height: 53px;
+  background: #8F64E1;
+  color: white;
+  border: none;
+  border-radius: 34px;
   font-weight: 500;
+  font-size: 1rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0;
+  box-shadow: 0 2px 8px rgba(80, 0, 120, 0.04);
+  transition: background-color 0.2s;
+}
+
+
+.historyButton:hover {
+  background-color: #6D5ACF;
 }
 
 .newQuestionButton {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background-color: var(--primary-violet);
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 0.5rem;
+  width: 306px;          
+  height: 58px;         
+  
+  background: linear-gradient(to right, #8F64E1, #1D68BD);
   border: none;
-  border-radius: 8px;
+  border-radius: 34px;    
   color: white;
-  font-size: 1rem;
+  font-size: 1rem;      
   font-weight: 600;
   cursor: pointer;
-  margin-top: 2rem;
+  transition: opacity 0.2s;
+  padding: 0;             
+}
+.newQuestionButton:hover {
+  background-color: #6D5ACF;
+}
+
+.questionLabel {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
 }

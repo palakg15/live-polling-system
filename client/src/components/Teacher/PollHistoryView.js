@@ -7,7 +7,7 @@ function PollHistoryView({ history, onClose }) {
     <div className={styles.overlay}>
       <div className={styles.modal}>
         <button className={styles.closeButton} onClick={onClose}>&times;</button>
-        <h2>Poll History</h2>
+        <h2>View <strong>Poll History</strong></h2>
         {history.length === 0 ? (
           <p>No past polls in this session yet.</p>
         ) : (
